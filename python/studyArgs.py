@@ -183,9 +183,142 @@ import functools
 
 # run_twice(Dock())
 
-class MyDog(object):
-    def __len__(self):
-        return 100
+# class MyDog(object):
+#     def __len__(self):
+#         return 100
 
-dog = MyDog()
-print(len(dog))
+# dog = MyDog()
+# print(len(dog))
+# print("\xB0C".encode('utf-8').decode('utf-8'))
+
+# def person(name, age, *args, city, job):
+#     print(name, age, city, job, args)
+
+# person('chen', 24, 2,4,5, job="eng", city="hz")
+
+# class Student(object):
+#     def __init__(self, name):
+#         self.__name = name
+
+#     def __len__(self):
+#         return len(self.__name)
+# bart = Student('chen')
+# print(bart._Student__name)
+# print(isinstance(bart, Student))
+
+# print((x for x in range(3)).values)
+
+# bar = Student('chj')
+# print(len(bar))
+# print('ABF'.lower())
+# print(abs(-12.5))
+
+# class Student(object):
+#     @property
+#     def birth(self):
+#         return self._birth
+#     @birth.setter
+#     def birth(self, value):
+#         self._birth = value
+
+#     @property
+#     def age(self):
+#         return 2020-self._birth
+
+# s = Student()
+# s.birth=2000
+# print(s.age)
+
+# for x in range(0):
+#     print(x)
+
+# print(list(range(10)))
+
+# class Fib(object):
+#     def __init__(self):
+#         self.a, self.b = 0, 1
+#     def __iter__(self):
+#         return self
+#     def __next__(self):
+#         self.a, self.b = self.b, self.a + self.b
+#         if self.a >500:
+#             raise StopIteration()
+#         return self.a
+#     def __getitem__(self, n):
+#         if isinstance(n, int):
+#             a, b = 1, 1
+#             for x in range(n):
+#                 a, b = b, a+b
+#             return a
+#         if isinstance(n, slice):
+#             start = n.start
+#             stop = n.stop
+#             if start is None:
+#                 start = 0
+#             a, b = 1, 1
+#             L = []
+#             for x in range(stop):
+#                 if x>=start:
+#                     L.append(a)
+#                 a,b = b, a+b
+#             return L
+
+# f = Fib()
+# print(f[1:5])
+# print(f[:6])
+# for n in f:
+#     print(n)
+# print(f[2])
+
+# class Chain(object):
+#     def __init__(self, path=''):
+#         self._path = path
+
+#     def __getattr__(self, path):
+#         return Chain('%s/%s' % (self._path, path))
+
+#     def __str__(self):
+#         return self._path
+
+# print(Chain().status.user.timeline.list)
+
+# class Student(object):
+#     def __init__(self, name):
+#         self.name = name
+
+#     def __call__(self):
+#         print('My name is %s.' % self.name)
+
+# s = Student('Michael')
+# s()
+# print(callable(Student('')))
+# print(callable([1,2]))
+
+# from enum import Enum, unique
+# Month = Enum('Month', ('Jan', 'Feb', 'Mar'))
+# for name, member in Month.__members__.items():
+#     print(name, '=>', member, ',', member.value)
+
+# @unique
+# class Weekday(Enum):
+#     Sun = 0
+#     Mon = 1
+#     Tue = 2
+#     Wed = 3
+#     Thu = 4
+#     Fri = 5
+#     Sat = 6
+
+# day1 = Weekday.Mon
+# print(day1)
+# print(Weekday['Tue'])
+# print(Weekday(1))
+# print(callable(Weekday))
+
+# class Hello(object):
+#     def hello(self, name='world'):
+#         print('Hello, %s.' % name)
+
+# l2 = list()
+# l2.append("ch")
+# print(l2)

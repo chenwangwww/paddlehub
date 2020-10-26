@@ -1,0 +1,25 @@
+import time
+from selenium import webdriver
+
+# browser = webdriver.Chrome()
+# browser.get('https://www.baidu.com')
+# browser.execute_script('window.open()')
+# print(browser.window_handles)
+# browser.switch_to_window(browser.window_handles[1])
+# browser.get('https://www.taobao.com')
+# time.sleep(1)
+# browser.switch_to_window(browser.window_handles[0])
+# browser.get('https://python.org')
+
+browser = webdriver.Chrome()
+browser.get('https://www.baidu.com')
+time.sleep(2)
+input = browser.find_element_by_css_selector('#kw')
+input.send_keys('韩国女团')
+time.sleep(2)
+input.clear()
+input.send_keys('后')
+button = browser.find_element_by_css_selector('#su')
+button.click()
+time.sleep(3)
+browser.close()

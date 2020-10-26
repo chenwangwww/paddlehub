@@ -402,26 +402,97 @@ namespace ConsoleApp
         //     Console.ReadKey();
         // }
 
-        public static void Main(string[] args)
+        // public static void Main(string[] args)
+        // {
+        //     Task<string> task1 = new Task<string>(getStr);
+        //     task1.Start();
+        //     task1.Wait();
+        //     Console.WriteLine(task1.Result.ToString());
+        // }
+
+        // public static string getStr()
+        // {
+        //     HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://api.shunliandongli.com/v2/receiptpay/getSellerInfo");
+        //     request.Method = "GET";
+        //     HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+        //     Stream receiveStream = response.GetResponseStream();
+        //     StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8);
+        //     string str = readStream.ReadToEnd();
+        //     response.Close();
+        //     readStream.Close();
+        //     // Console.WriteLine(str);
+        //     return str;
+        // }
+
+        // static void Main(string[] args)
+        // {
+        //     callMethod();
+        //     Console.ReadKey();
+        // }
+
+        // static async void callMethod()
+        // {
+        //     Task<int> task = Method1();
+        //     Method2();
+        //     int count = await task;
+        //     Method3(count);
+        // }
+
+        // static async Task<int> Method1()
+        // {
+        //     int count = 0;
+        //     return await Task.Run(()=>{
+        //         Thread.Sleep(2000);
+        //         for (int i = 0; i < 10; i++)
+        //         {
+        //             Console.WriteLine("Method 1");
+        //             count += 1;
+        //         }
+        //         return count;
+        //     });
+            
+        // }
+
+        // static void Method2()
+        // {
+        //     for (int i = 0; i < 5; i++)
+        //     {
+        //         Console.WriteLine("Method 2");
+        //     }
+        // }
+
+        // static void Method3(int count)
+        // {
+        //     Console.WriteLine("Total count is " + count);
+        // }
+
+        static void Main()
         {
-            Task<string> task1 = new Task<string>(getStr);
-            task1.Start();
-            task1.Wait();
-            Console.WriteLine(task1.Result.ToString());
+            Task task = new Task(CallMethod);
+            task.Start();
+            task.Wait();
+            Console.ReadKey();
         }
 
-        public static string getStr()
+        static async void CallMethod()
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://api.shunliandongli.com/v2/receiptpay/getSellerInfo");
-            request.Method = "GET";
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            Stream receiveStream = response.GetResponseStream();
-            StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8);
-            string str = readStream.ReadToEnd();
-            response.Close();
-            readStream.Close();
-            // Console.WriteLine(str);
-            return str;
+            string filePath = ".\\h5\\jquery3_5_1.js";
+            Task<int> task = ReadFile(filePath);
+            Console.WriteLine("Other work");
+            int length = await task;
+            Console.WriteLine(String.Format("Total length: {0}", length));
+        }
+
+        static async Task<int> ReadFile(string file)
+        {
+            int length = 0;
+            Console.WriteLine("file reading is starting");
+            using(StreamReader reader = new StreamReader(file)){
+                string s = await reader.ReadToEndAsync();
+                length = s.Length;
+            }
+            Console.WriteLine("file reading is completed");
+            return length;
         }
     }
 }
