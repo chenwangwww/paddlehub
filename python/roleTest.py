@@ -203,7 +203,12 @@ class StudyTool(object):
 # a.add((1,2))
 # print(a)
 
-class Student(object):
-    __slots__ = ('name', 'age')
-    def __init__(self):
-        self.age = 99
+# class Student(object):
+#     __slots__ = ('name', 'age')
+#     def __init__(self):
+#         self.age = 99
+
+# import jieba.posseg as pseg
+# words = pseg.cut("好漂亮的彩虹啊！")
+# for word, flag in words:
+#     print('%s %s' % (word, flag))

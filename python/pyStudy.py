@@ -272,12 +272,18 @@
 
 # import aiohttp
 # import asyncio
+# from http import cookies
 
 # async def main():
-#     async with aiohttp.ClientSession() as session:
-#         async with session.get('http://python.org') as response:
-#             print("Status:", response.status)
-#             print("Content-type:", response.headers['content-type'])
+#     c = cookies.SimpleCookie()
+#     c['test'] = 'newton'
+#     async with aiohttp.ClientSession(cookies=c) as session:
+#         async with session.get('http://localhost:8080') as response:
+#             morsel = response.cookies['sss']
+#             print('{} = {}'.format(morsel.key, morsel.value))
+#             print('----------------------------')
+#             for key in morsel.keys():
+#                 print('{} = {}'.format(key, morsel[key]))
 
 #             html = await response.text()
 #             print("Body:", html[:15], "...")
@@ -286,38 +292,46 @@
 # loop.run_until_complete(main())
 
 # from aiohttp import web
+# from aiohttp_index import IndexMiddleware
 
 # async def handle(request):
+#     print(request.headers)
 #     name = request.match_info.get('name', "Anonymous")
 #     text = "Hello, " + name
-#     return web.Response(text = text)
+#     headers = {
+#         'Access-Control-Allow-Origin':'*',
+#         'access-control-expose-headers':'*'
+#         }
+#     res = web.Response(text = text, headers = headers)
+#     # res.del_cookie('ttt')
+#     # res.set_cookie('sss', 'wang', max_age=60)
+#     return res
 
-# app = web.Application()
-# app.add_routes([web.get('/', handle),
-#                 web.get('/{name}', handle)])
-
+# app = web.Application(middlewares=[IndexMiddleware()])
+# app.add_routes([web.get('/{name}', handle)])
+# app.router.add_static('/', 'static')
 # if __name__ == '__main__':
 #     web.run_app(app)
 
 # with open(r'./python/Role.py', 'r') as f:
 #     print("eeee")
 
-class Test(object):
-    enter = 'Enter...'
-    exit = 'Exit...'
-    def __enter__(self):
-        print(Test.enter)
-        return self
+# class Test(object):
+#     enter = 'Enter...'
+#     exit = 'Exit...'
+#     def __enter__(self):
+#         print(Test.enter)
+#         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        print(Test.exit)
+#     def __exit__(self, exc_type, exc_val, exc_tb):
+#         print(Test.exit)
 
-    def fun(self):
-        print('fun execute!!!')
+#     def fun(self):
+#         print('fun execute!!!')
 
-test = Test()
-enter = type(test).__enter__
-enter(test)
+# test = Test()
+# enter = type(test).__enter__
+# enter(test)
 
 # with Test() as obj:
 #     obj.fun()
@@ -329,3 +343,23 @@ enter(test)
 #     }
 
 # print(headers["User-Agent"])
+
+# arr = [2]
+# a = 1 if len(arr) == 1 else 0 if len(arr) == 0 else 2
+# print(a)
+
+# _val = '22'
+# class person(object):
+    
+#     def __str__(self) -> _val:
+#         return '122'
+#     def fun(self, x, y):
+#         return x + y
+
+# print(person())
+# print(type(person().fun(1,2)))
+
+
+from studyArgs import *
+# dd()
+func1()

@@ -1,6 +1,5 @@
 from ltp import LTP
 ltp = LTP()
-ltp.init_dict(path="words.txt", max_window=5)
 
 class Sentence(object):
     def __init__(self, sentence):
@@ -10,16 +9,19 @@ class Sentence(object):
             'binWord': None,
         }
         self.arrZhuAttNoun = []
-        self.arrBinAttNoun = []
         self.arrInfo = []
+        self.srlStr = ''
 
         seg, hidden = ltp.seg([sentence])
-        print(seg)
         pos = ltp.pos(hidden)
-        print(pos)
         dep = ltp.dep(hidden)
         srl = ltp.srl(hidden, keep_empty=False)
+        print(seg)
+        print(pos)
         print(srl)
+        
+        #先setSRLInfo，再getArrInfo，顺序不能调换
+        self.setSRLInfo(seg, srl)
         self.getArrInfo(seg, dep, pos)
         if len(self.arrInfo) > 0:
             hed = self.getHEDInfo(self.arrInfo)
@@ -27,34 +29,28 @@ class Sentence(object):
                 sbv = self.getWordInfo(self.arrInfo, hed['dep'], 'SBV')
                 vob = self.getWordInfo(self.arrInfo, hed['dep'], 'VOB')
                 fob = self.getWordInfo(self.arrInfo, hed['dep'], 'FOB')
-                adv = self.getWordInfo(self.arrInfo, hed['dep'], 'ADV')
-                pob = None
-                if adv:
-                    pob = self.getWordInfo(self.arrInfo, adv['dep'], 'POB')
                 
-                self.dicA['zhuWord'] = zhuword = sbv or pob
+                self.dicA['zhuWord'] = zhuword = sbv
                 self.dicA['weiWord'] = hed
-                self.dicA['binWord'] = binword = vob or fob or pob
+                self.dicA['binWord'] =vob or fob
 
                 zhuword and self.arrZhuAttNoun.append(zhuword)
                 zhuword and self.getNounAttArr(self.arrInfo, zhuword['dep'], self.arrZhuAttNoun)
-                if binword and binword['pos'][0] == 'n':
-                    self.arrBinAttNoun.append(binword)
-                    self.getNounAttArr(self.arrInfo, binword['dep'], self.arrBinAttNoun)
 
-                for ser in self.arrInfo:
-                    if ser['pos'][0] == 'n':
-                        ser['num'] = self.getNumWord(ser['dep'])
-                if binword:
-                    self.getNumWord(binword['dep'])
-                self.printInfo()
+                # self.printInfo()
 
-    #获取词的信息列表
+    def setSRLInfo(self, seg, srl):
+        temp = srl[0][0][1]
+        resStr = seg[0][srl[0][0][0]] + '#'
+        for item in temp:
+            resStr += (item[0] + ':' + ''.join(seg[0][item[1]:item[2]+1]) + '#')
+        self.srlStr = resStr
+    
     def getArrInfo(self, strArr, depArr, posArr):
         tempstrArr = strArr[0]
-        tempstrArr.insert(0, "ROOT")
+        tempstrArr.insert(0, 'ROOT')
         tempposArr = posArr[0]
-        tempposArr.insert(0, "ROOT")
+        tempposArr.insert(0, 'ROOT')
         tempdepArr = depArr[0]
 
         tempArr = []
@@ -69,7 +65,6 @@ class Sentence(object):
             tempArr.append(dic)
         self.arrInfo = tempArr
 
-    #获取指定性质的词的信息
     def getWordInfo(self, words, GOV, wType, pos = None):
         sbv = None
         for word in words:
@@ -80,7 +75,6 @@ class Sentence(object):
                     sbv = word
         return sbv
 
-    #获取句子中的谓词信息
     def getHEDInfo(self, words):
         root = None
         for word in words:
@@ -88,22 +82,8 @@ class Sentence(object):
                 root = word
         return root
 
-    #获取数词
-    def getNumWord(self, word):
-        res = None
-        w = self.getWordInfo(self.arrInfo, word, 'ATT', 'm')
-        if w is not None:
-            res = w['dep']
-        else:
-            w = self.getWordInfo(self.arrInfo, word, 'ATT', 'q')
-            if w is not None:
-                w2 = self.getWordInfo(self.arrInfo, w['dep'], 'ATT', 'm')
-                if w2 is not None:
-                    res = w2['dep']
-        return res
-    #获取定中关系的名词信息列表
-    def getNounAttArr(self, words, word, resArr):
-        w = self.getWordInfo(words, word, 'ATT', 'n')
+    def getNounAttArr(self, words, GOV, resArr):
+        w = self.getWordInfo(words, GOV, 'ATT', 'n')
         if w is not None:
             resArr.append(w)
             self.getNounAttArr(words, w['dep'], resArr)
@@ -115,6 +95,5 @@ class Sentence(object):
         print('------------------')
         print(self.arrZhuAttNoun)
         print('------------------')
-        print(self.arrBinAttNoun)
+        print(self.srlStr)
 
-Sentence("哪里的工人们，修好了一座桥")

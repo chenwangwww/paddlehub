@@ -1,6 +1,6 @@
-from collections.abc import Iterable, Iterator
-from functools import reduce
-import functools
+# from collections.abc import Iterable, Iterator
+# from functools import reduce
+# import functools
 
 # def fun(name, *args):
 #     print('你好：', name)
@@ -322,3 +322,15 @@ import functools
 # l2 = list()
 # l2.append("ch")
 # print(l2)
+__all__ = ('func1', 'func2')
+def func1():
+    print('111')
+
+def func2():
+    print('222')
+
+# class dd(object):
+#     """
+#     docstring
+#     """
+#     pass

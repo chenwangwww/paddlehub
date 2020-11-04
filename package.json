@@ -1,0 +1,27 @@
+{
+  "name": "paddlehub",
+  "version": "1.0.0",
+  "description": "",
+  "main": "test.js",
+  "dependencies": {
+    "co": "^4.6.0",
+    "fs-readfile-promise": "^3.0.1",
+    "node-fetch": "^2.6.1",
+    "underscore": "^1.11.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chenwangwww/paddlehub.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chenwangwww/paddlehub/issues"
+  },
+  "homepage": "https://github.com/chenwangwww/paddlehub#readme"
+}
