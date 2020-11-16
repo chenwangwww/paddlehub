@@ -1,7 +1,16 @@
+import sys
 from Sentence import Sentence
 from ClsTools import clsTools
+from QuestionFilter import quesFilter
 
 if __name__ == "__main__":
-    sentence = Sentence("政府鼓励个人投资服务业。")
-    clsTools.setData(sentence)
-    clsTools.getData(sentence)
+    strr = sys.argv[1]
+    sentence = Sentence(strr)
+
+    if quesFilter.bQues(strr):
+        srlStr = clsTools.getData(sentence)
+        print(srlStr)
+    else:
+        clsTools.setData(sentence)
+    
+    

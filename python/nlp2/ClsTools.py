@@ -48,16 +48,27 @@ class ClsTools(object):
     def getData(self, sentence):
         tbName = sentence.arrZhuAttNoun[-1]['dep']
         weiword = sentence.dicA['weiWord']['dep']
-        zhuword = sentence.dicA['zhuWord']['dep']
+        arrNoun = sentence.arrNoun
         self.createTbl(tbName)
-        arrInfo = self.queryData(tbName, weiword)
-        print(arrInfo)
-        # result = ''
-        # for info in arrInfo:
-        #     if zhuword in info:
-        #         result = info
-        #         break
-        # return result
+        arrSrlStr = self.queryData(tbName, weiword)
+        print(arrSrlStr)
+        result = None
+        for info in arrSrlStr:
+            arr = list(filter(lambda val: val['dep'] in info[2], arrNoun))
+            if len(arr) == len(arrNoun):
+                result = info[2]
+                break
+        return result if result is None else self.srlToSent(result)
+
+    #srlstr转成句子
+    def srlToSent(self, srlStr):
+        arrStr = srlStr.split('#')
+        sentence = None 
+        if len(arrStr) > 0:
+            a0 = list(filter(lambda val: 'A0' in val, arrStr))[0]
+            a1 = list(filter(lambda val: 'A1' in val, arrStr))[0]
+            sentence = a0.split(':')[1] + arrStr[0] + a1.split(':')[1]
+        return sentence
 
 clsTools = ClsTools()
 

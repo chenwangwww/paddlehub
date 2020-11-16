@@ -1231,5 +1231,8 @@
 // Promise.try(f);
 // console.log('next')
 
-var t = typeof 1
-console.log(t)
+// var t = typeof 1
+// console.log(t)
+var b = true
+var arr = [1,b?null:2,3]
+console.log(arr)

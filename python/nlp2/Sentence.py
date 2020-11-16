@@ -8,6 +8,7 @@ class Sentence(object):
             'weiWord': None,
             'binWord': None,
         }
+        self.arrNoun = []
         self.arrZhuAttNoun = []
         self.arrInfo = []
         self.srlStr = ''
@@ -36,7 +37,8 @@ class Sentence(object):
 
                 zhuword and self.arrZhuAttNoun.append(zhuword)
                 zhuword and self.getNounAttArr(self.arrInfo, zhuword['dep'], self.arrZhuAttNoun)
-
+                self.getNounArr(self.arrInfo, self.arrNoun)
+                print(self.arrNoun)
                 # self.printInfo()
 
     def setSRLInfo(self, seg, srl):
@@ -88,6 +90,11 @@ class Sentence(object):
             resArr.append(w)
             self.getNounAttArr(words, w['dep'], resArr)
 
+    def getNounArr(self, words, resArr):
+        tempArr = list(filter(lambda val: 'n' in val['pos'], words))
+        for item in tempArr:
+            resArr.append(item)
+        
     def printInfo(self):
         print(self.arrInfo)
         print('------------------')
