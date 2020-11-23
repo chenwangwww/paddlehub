@@ -1,15 +1,33 @@
+#1+1=2， 1和1的和等于2
+
 class BaseCls(object):
-    def __init__(self):
-        print("father")
+    def __init__(self, cut = [], name = None):
+        self._mean = []
+        self._mean.append(name)
+        self._cut = cut
+        self._name = name
 
-    def getIsFunc(self):
-        pass
+    @property
+    def cut(self):
+        return self._cut
 
-    def getHasFunc(self):
-        pass
+    @cut.setter
+    def cut(self, value):
+        if value is not None and isinstance(value, list):
+            self._cut = value
+        
+    @property
+    def mean(self):
+        return self._mean
 
-    def insertIsFunc(self):
-        pass
+    def appendMeanItem(self, value):
+        self._mean.append(value)
 
-    def insertHasFunc(self):
-        pass
+    @property
+    def name(self):
+        return self._name
+
+item1 = BaseCls(['1'], '1')
+item2 = BaseCls(['2'], '2')
+item3 = BaseCls(['1', '和', '1', '的', '和', '等于', '2'], '1和1的和等于2')
+item3.appendMeanItem('1+1=2')
