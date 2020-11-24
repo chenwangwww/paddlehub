@@ -212,24 +212,25 @@ int main(int argc, char *argv[])
     // ret = remove("file.txt");
     // printf("%d", ret);
 
-    // char str[] = "This is runoob.com";
-    // FILE *fp;
-    // int ch;
-    // fp = fopen("file.txt", "w");
-    // fputs(str, fp);
-    // fclose(fp);
+    char str[] = "This is runoob.com";
+    FILE *fp;
+    int ch;
+    fp = fopen("file.txt", "w");
+    fputs(str, fp);
+    fputs(str, fp);
+    fclose(fp);
     // readFile(fp);
     // rewind(fp);
     // printf("\n");
     // readFile(fp);
     // fclose(fp);
 
-    char buf[BUFSIZ];
+    // char buf[BUFSIZ];
 
-    setbuf(stdout, buf);
-    puts("This is runoob");
-    Sleep(2000);
-    fflush(stdout);
+    // setbuf(stdout, buf);
+    // puts("This is runoob");
+    // Sleep(2000);
+    // fflush(stdout);
 
     return 0;
 }

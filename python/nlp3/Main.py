@@ -2,26 +2,36 @@ import pickle
 from BaseCls import BaseCls
 from QuesFliter import quesFliter
 from DbCtr import ctr
+from InfoCollector import infoCtr
+from Responser import rpsr
 import chardet
 import sys
 import pymysql
-
-TBNAME = "tbNlp"
-
-def getItem(name):
-    item = None
-    query = ctr.queryData(TBNAME, name)
-    if query:
-        item = pickle.loads(query[1])
-    else:
-        item = BaseCls(name=name)
-    return item
+import Globals
 
 if __name__ == '__main__':
+    print(rpsr.bCorrect(infoCtr.info))
+
+    # ctr.createTb(TBNAME)
+
+    item = Globals.getItem("我")
+    # item.appendMeansItem('我就是小王')
+    # item.appendMeansItem('我是人')
+    # item.reflection = "我"
+    # ctr.insertData(TBNAME, {'name':item.name, 'sequence':pickle.dumps(item)})
+
+    # item = getItem("对")
+    # print(item.means)
+    # print(item.reflection)
+    # item.appendMeansItem('小明是个人')
+    # item.appendMeansItem('小王就是我')
+    # item.reflection = "对"
+    # ctr.updateData(TBNAME, item.name, pickle.dumps(item))
+    # ctr.insertData(TBNAME, {'name':item.name, 'sequence':pickle.dumps(item)})
 
     # ctr.truncateTb(TBNAME)
-    ctr.createTb(TBNAME)
-    item = getItem('1')
+    # ctr.createTb(TBNAME)
+    # item = getItem('1')
     # print(item.means)
     # bytes('123', 'utf-8')
     # a = len(bytes('123', 'utf-8'))

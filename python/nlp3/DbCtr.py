@@ -58,7 +58,7 @@ class MysqlCtr(object):
     @connDb
     def queryData(self, tb, name=None):
         sql = "SELECT * FROM " + tb
-        sql += (" WHERE name = " + name) if name is not None else ''
+        sql += (" WHERE name = '" + name + "'") if name is not None else ''
         results = None
         try:
             self.cursor.execute(sql)
