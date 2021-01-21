@@ -1,16 +1,17 @@
+from Functions import getMd5
+from List import List
 #1+1=2， 1和1的和等于2
 #小明对小王说：“你是头猪。”，小王先产生反射：“我是头猪，猪是贬义词。”，小王后产生反应：“你（指小明）才是头猪。”。
 # {'from': '小明', 'to': '我', 'action': '说', 'content': '猪'}
 
-class BaseCls(object):
-    def __init__(self, cut = [], name = None):
-        self._means = []
+class InfoBase(object):
+    def __init__(self, name = None):
+        self._means = List()
         self._means.append(name)
-        self._cut = cut
+        self._cut = []
         self._name = name
-        self._reflection = ''       #反射
-        self._response = ''         #反应
-
+        self._md5 = getMd5(name)
+        self._reflection = None       #反射
 
     @property
     def cut(self):
@@ -40,9 +41,10 @@ class BaseCls(object):
     def reflection(self, value):
         self._reflection = value
     
-    # def getReflection(self, sentence):
-        # self._reflection = '小明对我说：“我就是头猪”，猪是肮脏，难看的东西。'
+    @property
+    def md5(self):
+        return self._md5
 
-    def getResponse(self):
-        #先进行比较，我是人，而不是猪，通过self._reflection，这是一句贬义词。
-        self._response = '我对小明说：“你才是一头猪。”'
+    @md5.setter
+    def md5(self, value):
+        self._md5 = value

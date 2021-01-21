@@ -242,8 +242,15 @@ public class SamplesArray
         // var ep = new Employeestruct();
 
         // GenericCacheTest.Show();
-        var b = new B();
-        b.func();
+        // var b = new B();
+        // b.func();
+
+        List<int> intL = new List<int>();
+        intL.Add(1);
+        intL.Add(12);
+        intL.Add(1);
+        int index = intL.FindIndex(1,2,x=>x == 1);
+        Console.WriteLine(index);
     }
 
     // public static void PrintIndexAndValues(String[] myArr)  {

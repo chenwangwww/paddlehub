@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#include "hello.h"
 
 // extern int errno;
 extern int val;
@@ -64,7 +65,7 @@ double factorial(unsigned int i)
     return i * factorial(i - 1);
 }
 
-int main()
+int main(int argc, char* argv[])
 {
     // printf("hello, world!");
 
@@ -276,8 +277,40 @@ int main()
     //     fclose(pf);
     // }
     
-    int i = 5;
-    printf("%d:%f", i, factorial(i));
+    // int i = 5;
+    // printf("%d:%f", i, factorial(i));
+
+    // int b = Max2(20, 13);
+    // printf("%d", b);
+    /*
+    int a;
+    int b;
+    */
+
+    // int b = unsafe(-10);
+    // printf("%2d", b);
+
+    // char *s = "111";
+    // printf("%p\n", s);
+    // printf("%p", &"111");
+
+    // int a = 2;
+    // double dd = 200.2;
+    // void *c;
+    // int *p = &a;
+    // c = p;
+    // double *q = c;
+    // q = &dd;
+    // printf("%.f", *q);
+
+    // int *s1 = &a;
+    // char *sp;
+    // void *v1;
+    // double *d1;
+    // printf("%d, %d, %d, %d", sizeof(s1), sizeof(v1), sizeof(d1), sizeof(sp));
+
+    // char *s1 = "hello world";
+    // printf("%#x", s1);
 
     return 0;
 }
@@ -298,3 +331,5 @@ void func1(void)
     th++;
     printf("th is %d, count is %d\n", th, count);
 }
+
+

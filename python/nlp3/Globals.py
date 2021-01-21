@@ -1,14 +1,36 @@
 import pickle
 from DbCtr import ctr
-from BaseCls import BaseCls
+from InfoBase import InfoBase
+from RuleBase import RuleBase
+from DicInfoBase import DicInfoBase
+from Functions import getMd5
 
-TBNAME = "tbNlp"
+TBNAME = "tbnlp"
 
-def getItem(name):
+def getItem(name, type = "infobase"):
     item = None
-    query = ctr.queryData(TBNAME, name)
+    md5 = getMd5(name)
+    query = ctr.queryData(TBNAME, md5)
     if query:
         item = pickle.loads(query[1])
     else:
-        item = BaseCls(name=name)
+        if type == "infobase":
+            item = InfoBase(name=name)
+        elif type == "rulebase":
+            item = RuleBase(name=name)
+        elif type == "dicinfobase":
+            item = DicInfoBase(name=name)
     return item
+
+def getRuleItem(name):
+    return getItem(name, "rulebase")
+
+def getDicInfoItem(name):
+    return getItem(name, "dicinfobase")
+
+def smartUpDb(item):
+    query = ctr.queryData(TBNAME, item.md5)
+    if query:
+        ctr.updateData(TBNAME, item.md5, pickle.dumps(item))
+    else:
+        ctr.insertData(TBNAME, {'name':item.md5, 'sequence':pickle.dumps(item)})

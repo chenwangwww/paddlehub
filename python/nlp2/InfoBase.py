@@ -1,6 +1,6 @@
 #1+1=2， 1和1的和等于2
 
-class BaseCls(object):
+class InfoBase(object):
     def __init__(self, cut = [], name = None):
         self._mean = []
         self._mean.append(name)
@@ -27,7 +27,7 @@ class BaseCls(object):
     def name(self):
         return self._name
 
-item1 = BaseCls(['1'], '1')
-item2 = BaseCls(['2'], '2')
-item3 = BaseCls(['1', '和', '1', '的', '和', '等于', '2'], '1和1的和等于2')
+item1 = InfoBase(['1'], '1')
+item2 = InfoBase(['2'], '2')
+item3 = InfoBase(['1', '和', '1', '的', '和', '等于', '2'], '1和1的和等于2')
 item3.appendMeanItem('1+1=2')
