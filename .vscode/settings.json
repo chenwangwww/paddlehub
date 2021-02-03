@@ -10,6 +10,7 @@
         "exception": "cpp",
         "memory": "cpp",
         "list": "cpp",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "type_traits": "cpp"
     }
 }

@@ -240,10 +240,39 @@ using namespace std;
 //     b = c;
 // }
 
+// struct X
+//     {
+//         X(const int& a, int& b){
+//             cout << a << "," << b << endl;
+//         }
+//     };
 
+class MemoryBlock
+{
+    public:
+     int a = 5;
+};
+
+void f(const MemoryBlock& a)
+{
+    cout << "const MemoryBlock&" << a.a << endl;
+}
+
+void f(MemoryBlock&& a)
+{
+    a.a = 11;
+    cout << "MemoryBlock&&" << a.a << endl;
+}
 
 int main()
 {
+    MemoryBlock block;
+    f(block);
+    f(MemoryBlock());
+
+    // int a = 3;
+    // X* p = new X(1,a);
+    // delete p;
     // Factory<X<int>> XintFactory;
     // X<int>* x1 = XintFactory.GetNewObject(65);
     // X<int>* x2 = XintFactory.GetNewObject(97);

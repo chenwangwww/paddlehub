@@ -55,8 +55,46 @@ class Program
         public override void Mn(){}
     }
 
+    delegate double ProcessDelegate(double pa1, double pa2);
+    delegate string LookMe(string s);
+
+    static double Multiply(double pa1, double pa2)
+    {
+        Console.WriteLine("Multiply!");
+        return pa1 * pa2;
+    }
+    static double Divide(double pa1, double pa2)
+    {
+        return pa1 / pa2;
+    }
+
     public static void Main(string[] args)
     {
+        // Predicate<string> sp = (name) => name == "chen";
+        // Console.WriteLine(sp("chen"));
+
+        // Func<string, bool> sp = (name) => name == "wang";
+        // Console.WriteLine(sp("wang1"));
+
+        Action<string> sp = (name) => {
+            Console.WriteLine(name == "wang");
+        };
+        sp("wang");
+
+        // ProcessDelegate process;
+
+        // process = new ProcessDelegate(Multiply);
+        // process += Divide;
+        // Console.WriteLine(process(2,3));
+
+        // LookMe lm = delegate(string name){return name + " hello!";};
+        // LookMe lm = (name) => name + " hello!";
+        // LookMe lm = name => {
+        //     Console.WriteLine("third try!");
+        //     return name + " hello!";
+        // };
+        // Console.WriteLine(lm("chen"));
+
         // for (int i = 0; i < 6; i++)
         // {
         //     lowNumbers.Add(i);
@@ -123,13 +161,13 @@ class Program
 
         // Console.WriteLine("陈望".Length);
 
-        Book book1 = new Book();
-        book1.addBook(book1);
+        // Book book1 = new Book();
+        // book1.addBook(book1);
         // Console.WriteLine(Book.books.Count);
-        SpecialBook book2 = new SpecialBook();
+        // SpecialBook book2 = new SpecialBook();
         // Console.WriteLine(SpecialBook.books.Count);
-        book2.Update();
-        Console.WriteLine(book2.bookId);
+        // book2.Update();
+        // Console.WriteLine(book2.bookId);
 
     }
 
