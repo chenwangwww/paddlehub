@@ -1,4 +1,8 @@
+#谓词逻辑：pyDatalog，知识图谱
+
+from pyDatalog import pyDatalog
 import pickle
+import t
 import numpy as np
 from DbCtr import ctr
 from ltp import LTP
@@ -41,6 +45,46 @@ class NeureCtr:
         else:
             info = self._relevants[value[0]]
             info.append(value[1])
+
+def getNeureWords(neureCtr):
+    relevants = neureCtr.relevants
+    keys = list(relevants.keys())
+    values = list(relevants.values())
+    keys_words, values_words = [], []
+
+    for i in range(len(keys)):
+        envir_l, cont_l, pred_ = keys[i]
+        keys_words.append((datactr.get_txt_from_label(envir_l, datactr.envir_labels_path), datactr.get_txt_from_label(cont_l, datactr.content_label_path), datactr.get_txt_from_label(pred_, datactr.predicate_label_path)))
+        target = []
+        for tuple_data in values[i]:
+            target.append(datactr.get_txt_from_tuple(tuple_data))
+        values_words.append(target)
+    temp_dict = {}
+    for i in range(len(keys)):
+        temp_dict[keys_words[i]] = values_words[i]
+    return temp_dict
+
+def getdep(words):
+    seg, hidden = ltp.seg([words])
+    dep = ltp.dep(hidden)
+    print(seg)
+    print(dep)
+    print('----------------')
+
+class PredicateLogic:
+    def addFunc(self, arr):
+        pyDatalog.create_terms(arr[0])
+        for i in range(len(arr[2])):
+            +eval(arr[0])(arr[1], arr[2][i])
+
+    def boolFunc(self, arr):
+        pyDatalog.create_terms(arr[0])
+        try:
+            res = len(eval(arr[0])(arr[1], arr[2])) != 0
+        except:
+            res = False
+        finally:
+            print(res)
 
 class DataCtr:
     def __init__(self):
@@ -122,7 +166,6 @@ class DataCtr:
             for action in actions:
                 for name2 in names:
                     envir_title = name.strip() + action.strip() + name2.strip()
-                    self.insert_txt(envir_title)
                     tuple_data = self.get_number_tuple(envir_title)
                     print(envir_title, tuple_data)
                     list_envir.append([tuple_data, count])
@@ -137,8 +180,7 @@ class DataCtr:
         return self.create_dict_txt(predicate, self.predicate_label_path)
 
     def create_dict_txt(self, text, path):
-        lines = self.get_dict_txt(path)
-        self.insert_txt(text)        
+        lines = self.get_dict_txt(path)       
         tuple_data = self.get_number_tuple(text)
         if tuple_data not in lines:
             lines.update({tuple_data: len(lines)})
@@ -151,6 +193,7 @@ class DataCtr:
         if len(arr) != 2:
             return
         self.insert_txt(arr[0])
+        self.insert_txt(arr[1])
         tuple_data = self.get_number_tuple(arr[0])
         envir_labels = self.get_dict_txt(self.envir_labels_path)
         envir_label = envir_labels[tuple_data]
@@ -171,8 +214,25 @@ class DataCtr:
             target_num_tuple = self.get_number_tuple(target)
             return [(envir_label, content_label, predicate_label), target_num_tuple]
 
+    def webteach(self, info):
+        for val in info.values():
+            self.insert_txt(val)
+
+        tuple_data = self.get_number_tuple(info['envir'])
+        envir_labels = self.get_dict_txt(self.envir_labels_path)
+        envir_label = envir_labels[tuple_data]
+
+        predicate = info['pred']
+        content = info['content']
+        target = info['target']
+
+        content_label = self.create_content_txt(content)
+        predicate_label = self.create_predicate_txt(predicate)
+        target_num_tuple = self.get_number_tuple(target)
+        return [(envir_label, content_label, predicate_label), target_num_tuple]
 
 datactr = DataCtr()
+pred = PredicateLogic()
 # res = datactr.split_sentence('小明教小陈：中国的首都是北京。')
 # res2 = datactr.split_sentence('小明教小陈：中国的首都有长城。')
 # res3 = datactr.split_sentence('小明教小陈：中国的首都有故宫。')
@@ -185,28 +245,41 @@ datactr = DataCtr()
     # neureCtr.relevants = res2
     # smartUpDb(neureCtr)
 
-res = datactr.split_sentence('小明教小陈：北京是中国的首都。')
-res2 = datactr.split_sentence('小明教小陈：北京有长城。')
-res3 = datactr.split_sentence('小明教小陈：北京有故宫。')
-if res:
-    neureCtr = getItem(str(res[0][1]))
+# res = datactr.split_sentence('小明教小陈：北京是中国的首都。')
+# res2 = datactr.split_sentence('小明教小陈：北京有长城。')
+# res3 = datactr.split_sentence('小明教小陈：北京有故宫。')
+# res4 = datactr.split_sentence('小明教小陈：北京有北京大学和清华大学。')
+# if res:
+#     neureCtr = getItem(str(res[0][1]))
     # neureCtr.relevants = res
     # neureCtr.relevants = res2
     # neureCtr.relevants =  res3
+    # neureCtr.relevants =  res4
     # smartUpDb(neureCtr)
-    relevants = neureCtr.relevants
-    keys = list(relevants.keys())
-    values = list(relevants.values())
-    keys_words, values_words = [], []
+    # temp_dict = getNeureWords(neureCtr)
+    # for item in temp_dict.items():
+    #     arr = [item[0][1], item[0][2], item[1]]
+    #     pred.addFunc(arr)
+    # ques1 = ['上海', '是', '中国的首都']
+    # ques2 = ['北京', '有', '故宫']
+    # pred.boolFunc(ques1)
+    # pred.boolFunc(ques2)
 
-    for i in range(len(keys)):
-        envir_l, cont_l, pred_ = keys[i]
-        keys_words.append((datactr.get_txt_from_label(envir_l, datactr.envir_labels_path), datactr.get_txt_from_label(cont_l, datactr.content_label_path), datactr.get_txt_from_label(pred_, datactr.predicate_label_path)))
-        target = []
-        for tuple_data in values[i]:
-            target.append(datactr.get_txt_from_tuple(tuple_data))
-        values_words.append(target)
-    temp_dict = {}
-    for i in range(len(keys)):
-        temp_dict[keys_words[i]] = values_words[i]
-    print(temp_dict)
+    # for item in temp_dict.items():
+    #     for val in item[0]:
+    #         getdep(val)
+    #     for val in item[1]:
+    #         getdep(val)
+
+# t.crawl_geo_search('故宫')
+# for info in t.info_arr:
+#     res = datactr.webteach(info)
+#     neureCtr = getItem(str(res[0][1]))
+#     neureCtr.relevants = res
+#     smartUpDb(neureCtr)
+
+label = datactr.create_content_txt('北京')
+neureCtr = getItem(str(label))
+print(neureCtr.relevants)
+temp_dict = getNeureWords(neureCtr)
+print(temp_dict)

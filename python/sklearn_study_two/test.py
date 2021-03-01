@@ -188,17 +188,34 @@ from pyDatalog import pyDatalog
 # print(len(queens(X0,X1,X2,X3,X4,X5,X6,X7).data))
 
 #北京是中国的首都
-# pyDatalog.create_terms('X, Y, capital, bCapital')
-# +(capital['zhongguo'] == 'beijing')
-# bCapital(X,Y) <= (capital[X] == Y)
-# print(bCapital(X, 'shanghai'))
-pyDatalog.create_terms('X, Y, 首都, 是中国的首都')
-+(首都['中国'] == '北京')
-是中国的首都(X,Y) <= (首都[X] == Y)
-print(是中国的首都(X, '上海'))
+# pyDatalog.create_terms('X, Y, 北京, 上海')
+# +北京('是', '中国的首都')
+
+#上海是中国的首都吗？
+# pyDatalog.create_terms('上海')
+# try:
+#     res = len(上海('是', '中国的首都')) != 0
+# except:
+#     res = False
+# finally:
+#     print(res)
 
 #北京有长城和故宫
-pyDatalog.create_terms('X,Y,北京,长城和故宫,有,北京有')
-+(有['北京'] == '长城和故宫')
-北京有(X,Y) <= (有[X] == Y)
-print(北京有('北京', Y))
+# pyDatalog.create_terms('北京')
+# +北京('有', '长城')
+# +北京('有', '故宫')
+
+#北京有西湖吗？
+# pyDatalog.create_terms('北京')
+# try:
+#     res = len(北京('有', '西湖')) != 0
+# except:
+#     res = False
+# finally:
+#     print(res)
+
+# st = '123456'
+# print(st[1:])
+
+strr = "name:%s, id:%s" % (12, 'www')
+print(strr)

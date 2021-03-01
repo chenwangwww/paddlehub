@@ -1237,5 +1237,10 @@
 // var arr = [1,b?null:2,3]
 // console.log(arr)
 
-var a = [1,3,2].sort();
-console.log(a)
+// var a = [1,3,2].sort();
+// console.log(a)
+
+var a= ['chen', 'wang'];
+var b = [1,3];
+b = [...b, ...b];
+console.log(b);
